@@ -7,30 +7,36 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model User {
+  id           Int           @id @default(autoincrement())
+  username     String        @unique
+  password     String
+  chatSessions ChatSession[]
+}
+
 model ChatSession {
   id        Int           @id @default(autoincrement())
   userId    Int
   title     String?
   createdAt DateTime      @default(now())
   messages  ChatHistory[]
+  user      User          @relation(fields: [userId], references: [id])
 }
 
 model ChatHistory {
-  id            Int            @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   chatSessionId Int
   userMessage   String
   aiMessage     String
-  createdAt     DateTime       @default(now())
-
-  chatSession   ChatSession    @relation(fields: [chatSessionId], references: [id])
-  feedbacks     ChatFeedback[] // Relasi ke feedback
+  createdAt     DateTime      @default(now())
+  feedbacks     ChatFeedback[]
+  chatSession   ChatSession   @relation(fields: [chatSessionId], references: [id])
 }
 
 model ChatFeedback {
   id            Int         @id @default(autoincrement())
   chatHistoryId Int
-  rating        String      // Bisa "up" / "down", atau boolean/int
+  rating        String      // e.g., "up" or "down"
   createdAt     DateTime    @default(now())
-
   chatHistory   ChatHistory @relation(fields: [chatHistoryId], references: [id])
 }
