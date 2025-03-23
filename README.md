@@ -231,18 +231,7 @@ chat-app/
 
 ---
 
-## 7. Customization & Deployment
-
-- **Styling:**  
-  Customize the pastel colors in `client/src/pastel.css` to match your preferences.
-- **Security:**  
-  Enhance authentication, add password hashing, and secure your JWT implementation.
-- **Deployment:**  
-  Deploy the backend on platforms like Heroku, AWS, or DigitalOcean. Deploy the frontend on services like Netlify or Vercel, and update API URLs as needed.
-
----
-
-## 8. Contributing
+## 7. Contributing
 
 Feel free to fork the repository, open issues, or submit pull requests for:
 - Improved UI/UX.
@@ -251,7 +240,7 @@ Feel free to fork the repository, open issues, or submit pull requests for:
 
 ---
 
-## 9. License
+## 8. License
 
 This project is licensed under the [MIT License](LICENSE).
 
