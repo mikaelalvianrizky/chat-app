@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: chatapp
+      POSTGRES_DB: chat_app_db
     ports:
       - "5432:5432"
     volumes:

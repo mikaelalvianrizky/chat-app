@@ -22,7 +22,7 @@ This project is a multi-user chat application with OpenAI integration. Users can
 
 ## Technologies
 
-- **Frontend:** React, Bootstrap, and custom CSS for pastel themes.
+- **Frontend:** React, Bootstrap
 - **Backend:** Node.js, Express.
 - **Database:** PostgreSQL using Prisma ORM.
 - **Authentication:** Basic JWT (example implementation).
@@ -73,16 +73,20 @@ chat-app/
 
 ## 1. Setting Up the Database
 
-1. **Create a PostgreSQL database.** For example, run the following SQL in your PostgreSQL console:
+1. **Run the PostgreSQL server.** Run the following command in your console:
+   ```bash
+   docker-compose up --build -d
+   ```
+2. **Create a PostgreSQL database.** For example, run the following SQL in your PostgreSQL console:
    ```sql
    CREATE DATABASE chat_app_db;
    ```
-2. **Configure the database URL.**  
+3. **Configure the database URL.**  
    In the `server/.env` file, add:
    ```dotenv
    DATABASE_URL="postgresql://user:password@localhost:5432/chat_app_db?schema=public"
    ```
-3. **Define your data models.**  
+4. **Define your data models.**  
    In `server/prisma/schema.prisma`, define your models. Example:
    ```prisma
    datasource db {
@@ -128,7 +132,7 @@ chat-app/
      chatHistory   ChatHistory @relation(fields: [chatHistoryId], references: [id])
    }
    ```
-4. **Migrate and generate the Prisma client.**  
+5. **Migrate and generate the Prisma client.**  
    In the `server/` folder, run:
    ```bash
    npx prisma migrate dev --name init
