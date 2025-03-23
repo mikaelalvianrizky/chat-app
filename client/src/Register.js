@@ -1,4 +1,4 @@
-// src/Register.js
+// client/src/Register.js
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ThemeContext } from './ThemeContext';
@@ -9,6 +9,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
+  const backendUrl = process.env.REACT_APP_BACKEND_URL; // use environment variable
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -19,11 +20,12 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(`${backendUrl}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
+
       const data = await response.json();
       if (response.ok) {
         alert("Registration successful. Please log in.");
@@ -44,7 +46,7 @@ const Register = () => {
     ? "form-control bg-secondary text-white border-0"
     : "form-control pastel-input";
   const labelClass = theme === "dark" ? "text-white" : "text-dark";
-  const buttonClass = "btn btn-primary btn-block mt-4";
+  const buttonClass = "btn btn-primary btn-block mt-4"
 
   return (
     <div className="container mt-5">

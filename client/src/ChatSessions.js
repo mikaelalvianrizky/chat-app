@@ -1,24 +1,27 @@
 // client/src/ChatSessions.js
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
 
 const ChatSessions = () => {
+  const { theme } = useContext(ThemeContext);
   const [sessions, setSessions] = useState([]);
-  const [title, setTitle] = useState("");
-  const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
+  const userId = Number(localStorage.getItem("userId"));
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const fetchSessions = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/chat/sessions?userId=${userId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const data = await response.json();
-      setSessions(data.sessions);
+      const response = await fetch(`${backendUrl}/api/chat/sessions?userId=${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setSessions(data.sessions);
+      } else {
+        console.error("Failed to fetch sessions");
+      }
     } catch (error) {
-      console.error("Gagal mengambil sesi", error);
+      console.error(error);
     }
   };
 
@@ -26,63 +29,30 @@ const ChatSessions = () => {
     fetchSessions();
   }, []);
 
-  const createSession = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/api/chat/sessions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ userId }),
-      });
-      const data = await response.json();
-      setTitle(data.session.title);
-      fetchSessions();
-    } catch (error) {
-      console.error("Gagal membuat session", error);
-    }
-  };
-
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
-      <h2>Sesi Obrolan Saya</h2>
-      <form onSubmit={createSession} style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Judul session (opsional)"
-          style={{ padding: "8px", marginRight: "10px" }}
-        />
-        <button type="submit" style={{ padding: "8px 16px" }}>
-          Buat Session Baru
-        </button>
-      </form>
+    <div className="container mt-5">
+      <h2 className="mb-4">Your Chat Sessions</h2>
       {sessions.length === 0 ? (
-        <p>Tidak ada sesi yang ditemukan.</p>
+        <p>No sessions found.</p>
       ) : (
         sessions.map((session) => (
-          <div
-            key={session.id}
-            style={{
-              marginBottom: "20px",
-              border: "1px solid #ccc",
-              padding: "10px",
-            }}
-          >
-            <h3>
-              Session ID: {session.id} {session.title && `- ${session.title}`}
-            </h3>
-            <button
-              onClick={() =>
-                (window.location.href = `/chat?sessionId=${session.id}`)
-              }
-            >
-              Lanjutkan Chat
-            </button>
-            {/* Tampilkan preview pesan atau info lain jika diperlukan */}
+          <div key={session.id} className="card mb-3">
+            <div className="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <h5 className="card-title">
+                  Session {session.id} {session.title && `- ${session.title}`}
+                </h5>
+                <p className="card-text">
+                  Created: {new Date(session.createdAt).toLocaleString()}
+                </p>
+              </div>
+              <button
+                onClick={() => (window.location.href = `/chat?sessionId=${session.id}`)}
+                className="btn btn-primary"
+              >
+                Continue Chat
+              </button>
+            </div>
           </div>
         ))
       )}

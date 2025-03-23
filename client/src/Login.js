@@ -1,5 +1,5 @@
-// src/Login.js
-import React, { useState, useContext } from 'react';
+// client/src/Login.js
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ThemeContext } from './ThemeContext';
 
@@ -8,11 +8,12 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const backendUrl = process.env.REACT_APP_BACKEND_URL; // use environment variable
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`${backendUrl}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -31,16 +32,15 @@ const Login = () => {
     }
   };
 
-  // Use different classes based on the theme
   const cardClass = theme === "dark"
     ? "card mx-auto bg-dark text-white"
-    : "card mx-auto pastel-card"; // pastel-card is defined in pastel.css
+    : "card mx-auto pastel-card";
   const inputClass = theme === "dark"
     ? "form-control bg-secondary text-white border-0"
     : "form-control pastel-input";
   const labelClass = theme === "dark" ? "text-white" : "text-dark";
-  const buttonClass = "btn btn-primary btn-block mt-4";
-  
+  const buttonClass = "btn btn-primary btn-block mt-4"
+
   return (
     <div className="container mt-5">
       <div className={cardClass} style={{ maxWidth: '400px' }}>
