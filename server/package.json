@@ -1,0 +1,27 @@
+{
+    "name": "chat-app-backend",
+    "version": "1.0.0",
+    "description": "Backend for Chat App with OpenAI integration",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "dependencies": {
+        "@prisma/client": "^6.5.0",
+        "axios": "^0.27.2",
+        "body-parser": "^1.20.0",
+        "chat-app-backend": "file:",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.0",
+        "express": "^4.18.1",
+        "jsonwebtoken": "^9.0.2",
+        "pg": "^8.7.3"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15",
+        "prisma": "^6.5.0"
+    },
+    "author": "",
+    "license": "MIT"
+}
