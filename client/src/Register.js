@@ -1,18 +1,14 @@
-// client/src/Register.js
-import React, { useState, useEffect } from 'react';
+// src/Register.js
+import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { ThemeContext } from './ThemeContext';
 
 const Register = () => {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const { theme } = useContext(ThemeContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme") || "light";
-    setTheme(storedTheme);
-  }, []);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -28,7 +24,6 @@ const Register = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-
       const data = await response.json();
       if (response.ok) {
         alert("Registration successful. Please log in.");
@@ -45,15 +40,11 @@ const Register = () => {
   const cardClass = theme === "dark"
     ? "card mx-auto bg-dark text-white"
     : "card mx-auto pastel-card";
-
   const inputClass = theme === "dark"
     ? "form-control bg-secondary text-white border-0"
     : "form-control pastel-input";
-
   const labelClass = theme === "dark" ? "text-white" : "text-dark";
-  const buttonClass = theme === "dark"
-    ? "btn btn-primary btn-block mt-4"
-    : "btn btn-pastel btn-block mt-4";
+  const buttonClass = "btn btn-primary btn-block mt-4";
 
   return (
     <div className="container mt-5">
