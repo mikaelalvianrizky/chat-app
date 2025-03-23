@@ -10,6 +10,7 @@
     "dependencies": {
         "@prisma/client": "^6.5.0",
         "axios": "^0.27.2",
+        "bcrypt": "^5.1.1",
         "body-parser": "^1.20.0",
         "chat-app-backend": "file:",
         "cors": "^2.8.5",
