@@ -1,5 +1,6 @@
 // client/src/Chat.js
 import React, { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 
 const Chat = () => {
   const [message, setMessage] = useState("");
@@ -207,9 +208,12 @@ const Chat = () => {
                     : "bg-primary text-white"
                 }`}
               >
-                {msg.text}
+                {msg.sender === "AI" ? (
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                ) : (
+                  msg.text
+                )}
               </div>
-              {/* Tampilkan tombol feedback hanya untuk jawaban AI yang punya ID */}
               {msg.sender === "AI" && msg.id && (
                 <div className="d-inline-block ml-2">
                   <button

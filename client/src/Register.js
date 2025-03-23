@@ -1,11 +1,12 @@
-// client/src/Login.js
+// client/src/Register.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-const Login = () => {
+const Register = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,25 +14,31 @@ const Login = () => {
     setTheme(storedTheme);
   }, []);
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
+
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('userId', data.userId);
-        navigate('/chat'); // Redirect to chat page
+        alert("Registration successful. Please log in.");
+        navigate('/'); // Navigate to login page
       } else {
-        alert('Login failed. Please check your credentials.');
+        alert(data.error || "Registration failed");
       }
     } catch (error) {
       console.error(error);
-      alert('An error occurred during login.');
+      alert("An error occurred during registration.");
     }
   };
 
@@ -52,8 +59,8 @@ const Login = () => {
     <div className="container mt-5">
       <div className={cardClass} style={{ maxWidth: '400px' }}>
         <div className="card-body">
-          <h2 className="card-title text-center mb-4">Login</h2>
-          <form onSubmit={handleLogin}>
+          <h2 className="card-title text-center mb-4">Register</h2>
+          <form onSubmit={handleRegister}>
             <div className="form-group">
               <label className={labelClass}>Username:</label>
               <input
@@ -76,13 +83,24 @@ const Login = () => {
                 required
               />
             </div>
+            <div className="form-group mt-3">
+              <label className={labelClass}>Confirm Password:</label>
+              <input
+                type="password"
+                className={inputClass}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm password"
+                required
+              />
+            </div>
             <button type="submit" className={`${buttonClass} d-block mx-auto`}>
-              Login
+              Register
             </button>
           </form>
           <div className="mt-3 text-center">
             <p>
-              Don't have an account? <Link to="/register">Click here to register</Link>
+              Already have an account? <Link to="/">Click here to login</Link>
             </p>
           </div>
         </div>
@@ -91,4 +109,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
