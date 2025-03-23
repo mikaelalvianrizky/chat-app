@@ -4,7 +4,7 @@
 This project is a multi-user chat application with OpenAI integration. Users can:
 - Login and authenticate.
 - Create and select multiple chat sessions (rooms) to start new topics.
-- Interact with an AI using OpenAI's Chat Completion API (using `gpt-3.5-turbo`).
+- Interact with an AI using OpenAI's Chat Completion API (using `gpt-4o-mini`).
 - Provide feedback (thumbs up/down) on AI responses.
 - Toggle between dark and light themes—with the light mode using a pastel color scheme.
 
