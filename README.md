@@ -6,7 +6,7 @@ This project is a multi-user chat application with OpenAI integration. Users can
 - Create and select multiple chat sessions (rooms) to start new topics.
 - Interact with an AI using OpenAI's Chat Completion API (using `gpt-4o-mini`).
 - Provide feedback (thumbs up/down) on AI responses.
-- Toggle between dark and light themes—with the light mode using a pastel color scheme.
+- Toggle between dark and light themes.
 
 ---
 
@@ -16,7 +16,7 @@ This project is a multi-user chat application with OpenAI integration. Users can
 - **Session-Based Chat:** Create new sessions and select from existing sessions.
 - **OpenAI Integration:** Send messages to OpenAI's API and get intelligent responses.
 - **Feedback Mechanism:** Rate AI responses with thumbs up/down.
-- **Theme Toggle:** Switch between dark mode and light mode (light mode uses pastel colors).
+- **Theme Toggle:** Switch between dark mode and light mode.
 
 ---
 
